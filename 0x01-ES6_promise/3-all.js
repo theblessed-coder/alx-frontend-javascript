@@ -1,14 +1,10 @@
-/* eslint-disable linebreak-style */
-import { createUser, uploadPhoto } from './utils';
+import { uploadPhoto, createUser } from './utils';
 
 export default function handleProfileSignup() {
-  Promise.all([uploadPhoto(), createUser()])
-    .then((results) => {
-      const [photoResponse, userResponse] = results;
-      console.log(`${photoResponse.body} ${userResponse.firstName} ${userResponse.lastName}`);
+  return Promise.all([uploadPhoto(), createUser()])
+    .then((value) => {
+      console.log(`${value[0].body} ${value[1].firstName} ${value[1].lastName}`);
     })
-    // eslint-disable-next-line no-unused-vars
-    .catch((error) => {
-      console.error('Signup system offline');
-    });
+
+    .catch(() => console.log('Signup system offline'));
 }
